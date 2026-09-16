@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Gold Circle | News Open Spike Trading</title>
+  <meta name="description" content="The Gold Circle – Focused on NFP, CPI, PPI & FOMC open spike trades. Live countdowns, bias, calendar and XAUUSD." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0e11;
+      --card: #141a1f;
+      --border: #1e2630;
+      --gold: #d4a017;
+      --gold-light: #f0c040;
+      --text: #e8eaed;
+      --muted: #8b949e;
+      --green: #00c853;
+      --red: #ff5252;
+      --orange: #ffab40;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+    /* Header */
+    header {
+      background: linear-gradient(180deg, #12171c 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--gold), #b8860b);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: #000; font-weight: 900;
+    }
+    nav { display: flex; gap: 8px; flex-wrap: wrap; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    nav a:hover { color: var(--gold); background: rgba(212,160,23,0.1); }
+
+    /* Hero / Live Event Banner */
+    .hero {
+      background: linear-gradient(135deg, #1a1508 0%, #0f1216 60%);
+      border: 1px solid #3d2e0a;
+      border-radius: 16px;
+      padding: 28px 24px;
+      margin: 24px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -20%;
+      width: 60%; height: 200%;
+      background: radial-gradient(circle, rgba(212,160,23,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212,160,23,0.15);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .pulse { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+    .hero-meta {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+    .countdown {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .cd-box {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      min-width: 72px;
+      text-align: center;
+    }
+    .cd-box span {
+      display: block;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      line-height: 1.1;
+    }
+    .cd-box small { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .bias-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .bias-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .bias-sell { background: rgba(255,82,82,0.15); color: var(--red); border: 1px solid rgba(255,82,82,0.3); }
+    .bias-buy { background: rgba(0,200,83,0.15); color: var(--green); border: 1px solid rgba(0,200,83,0.3); }
+    .bias-whipsaw { background: rgba(255,171,64,0.15); color: var(--orange); border: 1px solid rgba(255,171,64,0.3); }
+    .bias-neutral { background: rgba(139,148,158,0.15); color: var(--muted); border: 1px solid rgba(139,148,158,0.3); }
+    .confidence {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .confidence strong { color: var(--text); }
+
+    /* Strategy Card */
+    .strategy {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+    .strategy h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .strategy ol {
+      padding-left: 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .strategy li { margin-bottom: 6px; }
+    .strategy strong { color: var(--text); }
+
+    /* Sections */
+    section { margin-bottom: 36px; }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .section-title span { color: var(--gold); }
+
+    /* Month selector */
+    select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      outline: none;
+    }
+    select:focus { border-color: var(--gold); }
+
+    /* Event cards grid */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .event-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      transition: border-color 0.2s;
+    }
+    .event-card:hover { border-color: #3a4555; }
+    .event-card.major { border-left: 3px solid var(--gold); }
+    .event-card .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .tag-nfp { background: rgba(0,200,83,0.15); color: var(--green); }
+    .tag-cpi { background: rgba(255,82,82,0.15); color: var(--red); }
+    .tag-ppi { background: rgba(255,171,64,0.15); color: var(--orange); }
+    .tag-fomc { background: rgba(212,160,23,0.2); color: var(--gold); }
+    .tag-other { background: rgba(139,148,158,0.15); color: var(--muted); }
+    .event-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
+    .event-card .time {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .event-card .bias-mini {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Chart section */
+    .chart-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      height: 420px;
+    }
+    .chart-wrap iframe { width: 100%; height: 100%; border: none; }
+
+    /* Useful links / extras */
+    .extras {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .extra-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .extra-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--gold); }
+    .extra-card p, .extra-card a {
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .extra-card a:hover { color: var(--gold-light); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer strong { color: var(--text); }
+    .disclaimer {
+      background: rgba(255,82,82,0.08);
+      border: 1px solid rgba(255,82,82,0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 20px 0;
+      font-size: 0.85rem;
+      color: #ff8a80;
+      text-align: left;
+    }
+
+    /* Update note */
+    .update-note {
+      background: rgba(212,160,23,0.08);
+      border: 1px solid rgba(212,160,23,0.25);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .update-note code {
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+    }
+
+    @media (max-width: 600px) {
+      .header-inner { flex-direction: column; align-items: flex-start; }
+      .cd-box { min-width: 60px; padding: 10px 12px; }
+      .cd-box span { font-size: 1.4rem; }
+      .chart-wrap { height: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="logo">
+        <div class="logo-icon">GC</div>
+        The Gold Circle
+      </div>
+      <nav>
+        <a href="#live">Live Event</a>
+        <a href="#strategy">Strategy</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#chart">XAUUSD</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- LIVE EVENT BANNER -->
+    <section id="live" class="hero">
+      <div class="hero-label"><span class="pulse"></span> Next High-Impact Event</div>
+      <h1 id="event-name">FOMC Rate Decision</h1>
+      <div class="hero-meta" id="event-meta">Wednesday, 16 Sep 2026 • 2:00 PM ET (8:00 PM SAST)</div>
+      
+      <div class="countdown" id="countdown">
+        <div class="cd-box"><span id="cd-days">00</span><small>Days</small></div>
+        <div class="cd-box"><span id="cd-hours">00</span><small>Hours</small></div>
+        <div class="cd-box"><span id="cd-mins">00</span><small>Mins</small></div>
+        <div class="cd-box"><span id="cd-secs">00</span><small>Secs</small></div>
+      </div>
+
+      <div class="bias-row">
+        <div class="bias-badge bias-whipsaw" id="bias-badge">
+          ⚡ Whipsaw Expected
+        </div>
+        <div class="confidence">
+          Confidence: <strong id="bias-pct">—</strong> &nbsp;|&nbsp; 
+          Enter <strong>5 seconds before</strong> the candle open • Aim to close in 5–10 seconds
+        </div>
+      </div>
+    </section>
+
+    <!-- STRATEGY -->
+    <section id="strategy" class="strategy">
+      <h2>⚡ The Gold Circle Open-Spike Method</h2>
+      <ol>
+        <li><strong>Know the exact release time</strong> (always in Eastern Time – convert to your local time).</li>
+        <li>Be ready on XAUUSD (or your preferred pair) 1–2 minutes before the print.</li>
+        <li>Enter <strong>5 seconds before</strong> the news candle opens.</li>
+        <li>Catch the initial spike on the open of that candle.</li>
+        <li>Close the trade within <strong>5–10 seconds</strong> – do not hold for the full reaction.</li>
+        <li>Only trade the 4 core events: <strong>NFP • CPI • PPI • FOMC</strong> unless the group calls an extra high-impact release.</li>
+      </ol>
+    </section>
+
+    <!-- HOW TO UPDATE -->
+    <div class="update-note">
+      <strong>Group Admin – How to update bias & calendar weekly:</strong><br>
+      Open this file → find the <code>EVENTS</code> array near the bottom → edit dates, times, bias, and confidence %. 
+      Save & re-upload. Takes under 3 minutes. All countdowns update automatically.
+    </div>
+
+    <!-- CALENDAR -->
+    <section id="calendar">
+      <div class="section-title">
+        <span>📅 Major News Calendar</span>
+        <select id="month-select" onchange="renderCalendar()">
+          <option value="2026-09">September 2026</option>
+          <option value="2026-10" selected>October 2026</option>
+          <option value="2026-11">November 2026</option>
+          <option value="2026-12">December 2026</option>
+        </select>
+      </div>
+      <div class="events-grid" id="events-grid">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- XAUUSD CHART -->
+    <section id="chart">
+      <div class="section-title"><span>📈 XAUUSD Live Chart</span></div>
+      <div class="chart-wrap">
+        <!-- TradingView Widget -->
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <iframe 
+            src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_xau&symbol=OANDA%3AXAUUSD&interval=1&hidesidetoolbar=0&symboledit=1&saveimage=0&toolbarbg=0b0e11&studies=%5B%5D&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en&utm_source=thegoldcircle&utm_medium=widget&utm_campaign=chart"
+            style="width:100%;height:100%;margin:0;padding:0;"
+            frameborder="0" allowtransparency="true" scrolling="no" allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- USEFUL EXTRAS -->
+    <section>
+      <div class="section-title"><span>🛠️ Useful for the Group</span></div>
+      <div class="extras">
+        <div class="extra-card">
+          <h3>Time Zones</h3>
+          <p>All official times are Eastern Time (ET).<br>
+          • 8:30 AM ET = 14:30 SAST<br>
+          • 2:00 PM ET = 20:00 SAST<br>
+          Always double-check DST changes.</p>
+        </div>
+        <div class="extra-card">
+          <h3>External Calendars</h3>
+          <p>
+            <a href="https://www.forexfactory.com/calendar" target="_blank" rel="noopener">Forex Factory →</a><br>
+            <a href="https://www.bls.gov/schedule/news_release/cpi.htm" target="_blank" rel="noopener">BLS CPI Schedule →</a><br>
+            <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">Fed FOMC Calendar →</a>
+          </p>
+        </div>
+        <div class="extra-card">
+          <h3>Risk Rules</h3>
+          <p>Never risk more than you can afford to lose. Spreads widen dramatically at the open. Use tight stops or fixed risk. Past performance is not indicative of future results.</p>
+        </div>
+        <div class="extra-card">
+          <h3>Group Notes</h3>
+          <p>Update the bias field above before every major event. Share the link in the group chat so everyone sees the same countdown and direction.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="disclaimer">
+      <strong>Risk Disclaimer:</strong> Trading news spikes, especially on the open candle, involves extreme volatility, widened spreads and possible slippage. This site is for educational and coordination purposes only within The Gold Circle group. It does not constitute financial advice. You are solely responsible for your own trading decisions and risk management.
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <strong>The Gold Circle</strong> • Built for the group • NFP • CPI • PPI • FOMC<br>
+      Data sources: BLS, Federal Reserve, Census Bureau. Update calendar weekly for accuracy.
+    </div>
+  </footer>
+
+  <script>
+    // ============================================================
+    //  EDIT THIS SECTION WEEKLY – THE ONLY PLACE YOU NEED TO TOUCH
+    // ============================================================
+    const EVENTS = [
+      // September 2026
+      { id: "fomc-sep", name: "FOMC Rate Decision + SEP", date: "2026-09-16T14:00:00-04:00", impact: "fomc", month: "2026-09",
+        bias: "whipsaw", pct: null, note: "Decision + Dot Plot + Press Conference" },
+
+      // October 2026
+      { id: "nfp-oct", name: "Non-Farm Payrolls (NFP)", date: "2026-10-02T08:30:00-04:00", impact: "nfp", month: "2026-10",
+        bias: "neutral", pct: null, note: "September employment data" },
+      { id: "cpi-oct", name: "Consumer Price Index (CPI)", date: "2026-10-14T08:30:00-04:00", impact: "cpi", month: "2026-10",
+        bias: "neutral", pct: null, note: "September inflation" },
+      { id: "ppi-oct", name: "Producer Price Index (PPI)", date: "2026-10-15T08:30:00-04:00", impact: "ppi", month: "2026-10",
+        bias: "neutral", pct: null, note: "September producer prices" },
+      { id: "fomc-oct", name: "FOMC Rate Decision", date: "2026-10-28T14:00:00-04:00", impact: "fomc", month: "2026-10",
+        bias: "neutral", pct: null, note: "October meeting" },
+
+      // November 2026
+      { id: "nfp-nov", name: "Non-Farm Payrolls (NFP)", date: "2026-11-06T08:30:00-05:00", impact: "nfp", month: "2026-11",
+        bias: "neutral", pct: null, note: "October employment data" },
+      { id: "cpi-nov", name: "Consumer Price Index (CPI)", date: "2026-11-10T08:30:00-05:00", impact: "cpi", month: "2026-11",
+        bias: "neutral", pct: null, note: "October inflation" },
+      { id: "ppi-nov", name: "Producer Price Index (PPI)", date: "2026-11-13T08:30:00-05:00", impact: "ppi", month: "2026-11",
+        bias: "neutral", pct: null, note: "October producer prices" },
+
+      // December 2026
+      { id: "nfp-dec", name: "Non-Farm Payrolls (NFP)", date: "2026-12-04T08:30:00-05:00", impact: "nfp", month: "2026-12",
+        bias: "neutral", pct: null, note: "November employment data" },
+      { id: "fomc-dec", name: "FOMC Rate Decision + SEP", date: "2026-12-09T14:00:00-05:00", impact: "fomc", month: "2026-12",
+        bias: "neutral", pct: null, note: "December meeting + Dot Plot" },
+      { id: "cpi-dec", name: "Consumer Price Index (CPI)", date: "2026-12-10T08:30:00-05:00", impact: "cpi", month: "2026-12",
+        bias: "neutral", pct: null, note: "November inflation" },
+    ];
+
+    // ============================================================
+    //  DO NOT EDIT BELOW UNLESS YOU KNOW WHAT YOU'RE DOING
+    // ============================================================
+
+    function getNextEvent() {
+      const now = new Date();
+      return EVENTS
+        .filter(e => new Date(e.date) > now)
+        .sort((a,b) => new Date(a.date) - new Date(b.date))[0] || EVENTS[EVENTS.length-1];
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric',
+                        hour: 'numeric', minute: '2-digit', timeZoneName: 'short' };
+      return d.toLocaleString('en-US', options);
+    }
+
+    function updateLiveBanner() {
+      const next = getNextEvent();
+      document.getElementById('event-name').textContent = next.name;
+      document.getElementById('event-meta').textContent = formatDate(next.date) + (next.note ? ' • ' + next.note : '');
+
+      const badge = document.getElementById('bias-badge');
+      const pctEl = document.getElementById('bias-pct');
+
+      badge.className = 'bias-badge';
+      if (next.bias === 'sell') {
+        badge.classList.add('bias-sell');
+        badge.textContent = '📉 Bias: SELL';
+      } else if (next.bias === 'buy') {
+        badge.classList.add('bias-buy');
+        badge.textContent = '📈 Bias: BUY';
+      } else if (next.bias === 'whipsaw') {
+        badge.classList.add('bias-whipsaw');
+        badge.textContent = '⚡ Whipsaw Expected';
+      } else {
+        badge.classList.add('bias-neutral');
+        badge.textContent = '⚪ Bias: Neutral / TBD';
+      }
+
+      pctEl.textContent = next.pct ? next.pct + '%' : '— (update before event)';
+    }
+
+    function updateCountdown() {
+      const next = getNextEvent();
+      const target = new Date(next.date).getTime();
+      const now = Date.now();
+      let diff = Math.max(0, target - now);
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      diff -= days * (1000*60*60*24);
+      const hours = Math.floor(diff / (1000*60*60));
+      diff -= hours * (1000*60*60);
+      const mins = Math.floor(diff / (1000*60));
+      diff -= mins * (1000*60);
+      const secs = Math.floor(diff / 1000);
+
+      document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+      document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
+      document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
+    }
+
+    function renderCalendar() {
+      const month = document.getElementById('month-select').value;
+      const grid = document.getElementById('events-grid');
+      const filtered = EVENTS.filter(e => e.month === month);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="color:var(--muted)">No major events listed for this month yet.</p>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(e => {
+        const d = new Date(e.date);
+        const timeStr = d.toLocaleString('en-US', {
+          weekday: 'short', month: 'short', day: 'numeric',
+          hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+        });
+        let biasText = '';
+        if (e.bias === 'sell') biasText = `<span style="color:var(--red)">Bias: SELL ${e.pct?e.pct+'%':''}</span>`;
+        else if (e.bias === 'buy') biasText = `<span style="color:var(--green)">Bias: BUY ${e.pct?e.pct+'%':''}</span>`;
+        else if (e.bias === 'whipsaw') biasText = `<span style="color:var(--orange)">Whipsaw Expected</span>`;
+        else biasText = `<span style="color:var(--muted)">Bias: TBD</span>`;
+
+        return `
+          <div class="event-card major">
+            <span class="tag tag-${e.impact}">${e.impact.toUpperCase()}</span>
+            <h3>${e.name}</h3>
+            <div class="time">${timeStr}</div>
+            <div class="bias-mini">${biasText}</div>
+            ${e.note ? `<div style="font-size:0.8rem;color:var(--muted);margin-top:6px">${e.note}</div>` : ''}
+          </div>`;
+      }).join('');
+    }
+
+    // Init
+    updateLiveBanner();
+    updateCountdown();
+    renderCalendar();
+    setInterval(updateCountdown, 1000);
+    setInterval(updateLiveBanner, 60000); // refresh banner every minute in case event passes
+  </script>
+</body>
+</html>

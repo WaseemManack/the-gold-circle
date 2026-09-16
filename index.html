@@ -368,10 +368,10 @@
 
       <div class="bias-row">
         <div class="bias-badge bias-whipsaw" id="bias-badge">
-          ⚡ Whipsaw Expected 30 Percent 
+          ⚡ Whipsaw Expected
         </div>
         <div class="confidence">
-          Confidence: <strong id="70% SELL">70% SELL</strong> &nbsp;|&nbsp; 
+          Confidence: <strong id="bias-pct">70%</strong> &nbsp;|&nbsp; 
           Enter <strong>5 seconds before</strong> the candle open • Aim to close in 5–10 seconds
         </div>
       </div>
@@ -402,8 +402,8 @@
       <div class="section-title">
         <span>📅 Major News Calendar</span>
         <select id="month-select" onchange="renderCalendar()">
-          <option value="2026-09">September 2026</option>
-          <option value="2026-10" selected>October 2026</option>
+          <option value="2026-09" selected>September 2026</option>
+          <option value="2026-10">October 2026</option>
           <option value="2026-11">November 2026</option>
           <option value="2026-12">December 2026</option>
         </select>
@@ -430,185 +430,197 @@
 
     <!-- USEFUL EXTRAS -->
     <section>
-      <div class="section-title"><span>🛠️ Useful for the Group</span></div>
+      <div class="section-title"><span>🛠️ Trading Resources & Tools</span></div>
       <div class="extras">
         <div class="extra-card">
-          <h3>Time Zones</h3>
-          <p>All official times are Eastern Time (ET).<br>
-          • 8:30 AM ET = 14:30 SAST<br>
-          • 2:00 PM ET = 20:00 SAST<br>
-          Always double-check DST changes.</p>
+          <h3>Economic Calendars</h3>
+          <p><a href="https://www.forexfactory.com/calendar" target="_blank" rel="noopener">Forex Factory Calendar &rarr;</a></p>
+          <p><a href="https://www.investing.com/economic-calendar/" target="_blank" rel="noopener">Investing.com Calendar &rarr;</a></p>
         </div>
         <div class="extra-card">
-          <h3>External Calendars</h3>
-          <p>
-            <a href="https://www.forexfactory.com/calendar" target="_blank" rel="noopener">Forex Factory →</a><br>
-            <a href="https://www.bls.gov/schedule/news_release/cpi.htm" target="_blank" rel="noopener">BLS CPI Schedule →</a><br>
-            <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">Fed FOMC Calendar →</a>
-          </p>
+          <h3>Core High-Impact Events</h3>
+          <p><strong>NFP:</strong> Non-Farm Payrolls (1st Friday/mo)</p>
+          <p><strong>CPI:</strong> Consumer Price Index (Inflation)</p>
+          <p><strong>PPI:</strong> Producer Price Index</p>
+          <p><strong>FOMC:</strong> Fed Interest Rate Decision</p>
         </div>
         <div class="extra-card">
-          <h3>Risk Rules</h3>
-          <p>Never risk more than you can afford to lose. Spreads widen dramatically at the open. Use tight stops or fixed risk. Past performance is not indicative of future results.</p>
-        </div>
-        <div class="extra-card">
-          <h3>Group Notes</h3>
-          <p>Update the bias field above before every major event. Share the link in the group chat so everyone sees the same countdown and direction.</p>
+          <h3>Execution Rules</h3>
+          <p>• Fixed risk per trade (1–2% max)</p>
+          <p>• One entry per event</p>
+          <p>• Avoid chasing if slippage occurs</p>
         </div>
       </div>
     </section>
 
     <div class="disclaimer">
-      <strong>Risk Disclaimer:</strong> Trading news spikes, especially on the open candle, involves extreme volatility, widened spreads and possible slippage. This site is for educational and coordination purposes only within The Gold Circle group. It does not constitute financial advice. You are solely responsible for your own trading decisions and risk management.
+      <strong>⚠️ Risk Warning:</strong> High-impact news releases involve extreme volatility, slippage, and spread widening. The Gold Circle strategy requires strict risk management and sub-second execution. Past results do not guarantee future success.
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <strong>The Gold Circle</strong> • Built for the group • NFP • CPI • PPI • FOMC<br>
-      Data sources: BLS, Federal Reserve, Census Bureau. Update calendar weekly for accuracy.
+      <p>&copy; 2026 <strong>The Gold Circle</strong>. Built for high-frequency news event execution.</p>
     </div>
   </footer>
 
   <script>
-    // ============================================================
-    //  EDIT THIS SECTION WEEKLY – THE ONLY PLACE YOU NEED TO TOUCH
-    // ============================================================
+    // Event Data Configuration
     const EVENTS = [
-      // September 2026
-      { id: "fomc-sep", name: "FOMC Rate Decision + SEP", date: "2026-09-16T14:00:00-04:00", impact: "fomc", month: "2026-09",
-        bias: "whipsaw", pct: null, note: "Decision + Dot Plot + Press Conference" },
-
-      // October 2026
-      { id: "nfp-oct", name: "Non-Farm Payrolls (NFP)", date: "2026-10-02T08:30:00-04:00", impact: "nfp", month: "2026-10",
-        bias: "neutral", pct: null, note: "September employment data" },
-      { id: "cpi-oct", name: "Consumer Price Index (CPI)", date: "2026-10-14T08:30:00-04:00", impact: "cpi", month: "2026-10",
-        bias: "neutral", pct: null, note: "September inflation" },
-      { id: "ppi-oct", name: "Producer Price Index (PPI)", date: "2026-10-15T08:30:00-04:00", impact: "ppi", month: "2026-10",
-        bias: "neutral", pct: null, note: "September producer prices" },
-      { id: "fomc-oct", name: "FOMC Rate Decision", date: "2026-10-28T14:00:00-04:00", impact: "fomc", month: "2026-10",
-        bias: "neutral", pct: null, note: "October meeting" },
-
-      // November 2026
-      { id: "nfp-nov", name: "Non-Farm Payrolls (NFP)", date: "2026-11-06T08:30:00-05:00", impact: "nfp", month: "2026-11",
-        bias: "neutral", pct: null, note: "October employment data" },
-      { id: "cpi-nov", name: "Consumer Price Index (CPI)", date: "2026-11-10T08:30:00-05:00", impact: "cpi", month: "2026-11",
-        bias: "neutral", pct: null, note: "October inflation" },
-      { id: "ppi-nov", name: "Producer Price Index (PPI)", date: "2026-11-13T08:30:00-05:00", impact: "ppi", month: "2026-11",
-        bias: "neutral", pct: null, note: "October producer prices" },
-
-      // December 2026
-      { id: "nfp-dec", name: "Non-Farm Payrolls (NFP)", date: "2026-12-04T08:30:00-05:00", impact: "nfp", month: "2026-12",
-        bias: "neutral", pct: null, note: "November employment data" },
-      { id: "fomc-dec", name: "FOMC Rate Decision + SEP", date: "2026-12-09T14:00:00-05:00", impact: "fomc", month: "2026-12",
-        bias: "neutral", pct: null, note: "December meeting + Dot Plot" },
-      { id: "cpi-dec", name: "Consumer Price Index (CPI)", date: "2026-12-10T08:30:00-05:00", impact: "cpi", month: "2026-12",
-        bias: "neutral", pct: null, note: "November inflation" },
+      {
+        id: "fomc-sep-2026",
+        name: "FOMC Rate Decision",
+        type: "fomc",
+        timestamp: "2026-09-16T18:00:00Z", // 2:00 PM ET = 18:00 UTC / 20:00 SAST
+        displayTime: "Wednesday, 16 Sep 2026 • 2:00 PM ET (8:00 PM SAST)",
+        bias: "whipsaw", // buy, sell, whipsaw, neutral
+        biasText: "⚡ Whipsaw Expected",
+        confidence: "70%",
+        month: "2026-09",
+        major: true
+      },
+      {
+        id: "ppi-sep-2026",
+        name: "US PPI Inflation Data",
+        type: "ppi",
+        timestamp: "2026-09-17T12:30:00Z",
+        displayTime: "Thursday, 17 Sep 2026 • 8:30 AM ET (2:30 PM SAST)",
+        bias: "buy",
+        biasText: "🟢 Bullish Spike Bias",
+        confidence: "65%",
+        month: "2026-09",
+        major: false
+      },
+      {
+        id: "nfp-oct-2026",
+        name: "US Non-Farm Payrolls (NFP)",
+        type: "nfp",
+        timestamp: "2026-10-02T12:30:00Z",
+        displayTime: "Friday, 02 Oct 2026 • 8:30 AM ET (2:30 PM SAST)",
+        bias: "sell",
+        biasText: "🔴 Bearish Spike Bias",
+        confidence: "75%",
+        month: "2026-10",
+        major: true
+      },
+      {
+        id: "cpi-oct-2026",
+        name: "US CPI Inflation Data",
+        type: "cpi",
+        timestamp: "2026-10-14T12:30:00Z",
+        displayTime: "Wednesday, 14 Oct 2026 • 8:30 AM ET (2:30 PM SAST)",
+        bias: "buy",
+        biasText: "🟢 Bullish Spike Bias",
+        confidence: "80%",
+        month: "2026-10",
+        major: true
+      },
+      {
+        id: "nfp-nov-2026",
+        name: "US Non-Farm Payrolls (NFP)",
+        type: "nfp",
+        timestamp: "2026-11-06T13:30:00Z",
+        displayTime: "Friday, 06 Nov 2026 • 8:30 AM EST (3:30 PM SAST)",
+        bias: "buy",
+        biasText: "🟢 Bullish Spike Bias",
+        confidence: "70%",
+        month: "2026-11",
+        major: true
+      },
+      {
+        id: "fomc-nov-2026",
+        name: "FOMC Rate Decision",
+        type: "fomc",
+        timestamp: "2026-11-05T19:00:00Z",
+        displayTime: "Thursday, 05 Nov 2026 • 2:00 PM EST (9:00 PM SAST)",
+        bias: "whipsaw",
+        biasText: "⚡ Whipsaw Expected",
+        confidence: "75%",
+        month: "2026-11",
+        major: true
+      }
     ];
 
-    // ============================================================
-    //  DO NOT EDIT BELOW UNLESS YOU KNOW WHAT YOU'RE DOING
-    // ============================================================
-
+    // Find next upcoming event
     function getNextEvent() {
       const now = new Date();
-      return EVENTS
-        .filter(e => new Date(e.date) > now)
-        .sort((a,b) => new Date(a.date) - new Date(b.date))[0] || EVENTS[EVENTS.length-1];
+      return EVENTS.find(e => new Date(e.timestamp) > now) || EVENTS[0];
     }
 
-    function formatDate(iso) {
-      const d = new Date(iso);
-      const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric',
-                        hour: 'numeric', minute: '2-digit', timeZoneName: 'short' };
-      return d.toLocaleString('en-US', options);
-    }
+    const currentEvent = getNextEvent();
 
-    function updateLiveBanner() {
-      const next = getNextEvent();
-      document.getElementById('event-name').textContent = next.name;
-      document.getElementById('event-meta').textContent = formatDate(next.date) + (next.note ? ' • ' + next.note : '');
+    // Populate Hero Banner
+    document.getElementById('event-name').textContent = currentEvent.name;
+    document.getElementById('event-meta').textContent = currentEvent.displayTime;
+    document.getElementById('bias-pct').textContent = currentEvent.confidence;
+    
+    const badge = document.getElementById('bias-badge');
+    badge.textContent = currentEvent.biasText;
+    badge.className = `bias-badge bias-${currentEvent.bias}`;
 
-      const badge = document.getElementById('bias-badge');
-      const pctEl = document.getElementById('bias-pct');
-
-      badge.className = 'bias-badge';
-      if (next.bias === 'sell') {
-        badge.classList.add('bias-sell');
-        badge.textContent = '📉 Bias: SELL';
-      } else if (next.bias === 'buy') {
-        badge.classList.add('bias-buy');
-        badge.textContent = '📈 Bias: BUY';
-      } else if (next.bias === 'whipsaw') {
-        badge.classList.add('bias-whipsaw');
-        badge.textContent = '⚡ Whipsaw Expected';
-      } else {
-        badge.classList.add('bias-neutral');
-        badge.textContent = '⚪ Bias: Neutral / TBD';
-      }
-
-      pctEl.textContent = next.pct ? next.pct + '%' : '— (update before event)';
-    }
-
+    // Countdown Logic
     function updateCountdown() {
-      const next = getNextEvent();
-      const target = new Date(next.date).getTime();
-      const now = Date.now();
-      let diff = Math.max(0, target - now);
+      const target = new Date(currentEvent.timestamp).getTime();
+      const now = new Date().getTime();
+      const diff = target - now;
 
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days * (1000*60*60*24);
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours * (1000*60*60);
-      const mins = Math.floor(diff / (1000*60));
-      diff -= mins * (1000*60);
-      const secs = Math.floor(diff / 1000);
-
-      document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
-      document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
-      document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
-      document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
-    }
-
-    function renderCalendar() {
-      const month = document.getElementById('month-select').value;
-      const grid = document.getElementById('events-grid');
-      const filtered = EVENTS.filter(e => e.month === month);
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '<p style="color:var(--muted)">No major events listed for this month yet.</p>';
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-mins').textContent = '00';
+        document.getElementById('cd-secs').textContent = '00';
         return;
       }
 
-      grid.innerHTML = filtered.map(e => {
-        const d = new Date(e.date);
-        const timeStr = d.toLocaleString('en-US', {
-          weekday: 'short', month: 'short', day: 'numeric',
-          hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
-        });
-        let biasText = '';
-        if (e.bias === 'sell') biasText = `<span style="color:var(--red)">Bias: SELL ${e.pct?e.pct+'%':''}</span>`;
-        else if (e.bias === 'buy') biasText = `<span style="color:var(--green)">Bias: BUY ${e.pct?e.pct+'%':''}</span>`;
-        else if (e.bias === 'whipsaw') biasText = `<span style="color:var(--orange)">Whipsaw Expected</span>`;
-        else biasText = `<span style="color:var(--muted)">Bias: TBD</span>`;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-        return `
-          <div class="event-card major">
-            <span class="tag tag-${e.impact}">${e.impact.toUpperCase()}</span>
-            <h3>${e.name}</h3>
-            <div class="time">${timeStr}</div>
-            <div class="bias-mini">${biasText}</div>
-            ${e.note ? `<div style="font-size:0.8rem;color:var(--muted);margin-top:6px">${e.note}</div>` : ''}
-          </div>`;
-      }).join('');
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
     }
 
-    // Init
-    updateLiveBanner();
-    updateCountdown();
-    renderCalendar();
     setInterval(updateCountdown, 1000);
-    setInterval(updateLiveBanner, 60000); // refresh banner every minute in case event passes
+    updateCountdown();
+
+    // Render Calendar Cards
+    function renderCalendar() {
+      const selectedMonth = document.getElementById('month-select').value;
+      const grid = document.getElementById('events-grid');
+      grid.innerHTML = '';
+
+      const filtered = EVENTS.filter(e => e.month === selectedMonth);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="color:var(--muted); font-size:0.9rem;">No major events scheduled for this month yet.</div>`;
+        return;
+      }
+
+      filtered.forEach(ev => {
+        const card = document.createElement('div');
+        card.className = `event-card ${ev.major ? 'major' : ''}`;
+        
+        let biasColor = 'var(--muted)';
+        if (ev.bias === 'buy') biasColor = 'var(--green)';
+        if (ev.bias === 'sell') biasColor = 'var(--red)';
+        if (ev.bias === 'whipsaw') biasColor = 'var(--orange)';
+
+        card.innerHTML = `
+          <span class="tag tag-${ev.type}">${ev.type.toUpperCase()}</span>
+          <h3>${ev.name}</h3>
+          <div class="time">${ev.displayTime}</div>
+          <div class="bias-mini" style="color: ${biasColor}">
+            ${ev.biasText} (${ev.confidence})
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    renderCalendar();
   </script>
 </body>
 </html>
